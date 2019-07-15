@@ -1,6 +1,7 @@
 # Text Game
 Simple Rock Paper Scissors text game.
 
+```
 **************************************************
  Rock Paper Scissors - Text Game
 **************************************************
@@ -28,3 +29,4 @@ Chose an option:
 >> Game Over!
 >> Computer won the game!
 >> Do you want to play again? (1.Start, 0.Exit):  
+```
