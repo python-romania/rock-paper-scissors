@@ -78,10 +78,9 @@ def start() -> None:
             menu_choice = user_input(">>")
         except ValueError as e:
             print("You must enter a number between 0 and 1!")
-
-        if user_input == "1":
+        if menu_choice == 1:
             return True
-        elif user_input == "0":
+        elif menu_choice == 0:
             exit = True
             return False
 

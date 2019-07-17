@@ -71,15 +71,17 @@ def test_input(fake_input, capfd) -> None:
     with pytest.raises(ValueError) as exception:
         result = main.user_input(">")
 
-
-
-def test_start() -> None:
+@mock.patch("main.input")
+def test_start(fake_input) -> None:
     """
     Test main function
     """
-    # Tests start game
-    with mock.patch("main.user_input", lambda a: 1):
-        reload(main)
-        result = main.start()
-        assert result == "1"
-    reload(main)
+    # Test start game menu choice
+    fake_input.return_value = 1
+    result = main.start()
+    assert result
+
+    # Test exit game menu choice
+    fake_input.return_value = 0
+    result = main.start()
+    assert not result
