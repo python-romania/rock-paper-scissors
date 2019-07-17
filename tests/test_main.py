@@ -5,7 +5,11 @@ Test main file.
 """
 # Standard imports
 import sys
+from importlib import reload
 from unittest import mock
+
+# Third party imports
+import pytest
 
 # Local imports
 import main
@@ -50,26 +54,32 @@ def test_menu(capfd) -> None:
     assert third_line in out
     assert forth_line in out
 
-
 @mock.patch("main.input")
-def test_start(fake_input) -> None:
+def test_input(fake_input, capfd) -> None:
+    """
+    Test user input
+    """
+    # Test ValueError exception 
+    fake_input.return_value = "A"
+
+    with pytest.raises(ValueError) as exception:
+        result = main.user_input(">")
+
+    # Test invalid menu option
+    fake_input.return_value = 2
+
+    with pytest.raises(ValueError) as exception:
+        result = main.user_input(">")
+
+
+
+def test_start() -> None:
     """
     Test main function
     """
-    # Set a fake return value
-    fake_input.return_value = "1"
-
-    # Get the return value
-    result = main.start()
-
-    # Test start game
-    assert result == True
-
-    # Set fake return value
-    fake_input.return_value = "0"
-
-    # Get the new result
-    result = main.start()
-
-    # Test exit game
-    assert result == False
+    # Tests start game
+    with mock.patch("main.user_input", lambda a: 1):
+        reload(main)
+        result = main.start()
+        assert result == "1"
+    reload(main)

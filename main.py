@@ -52,6 +52,16 @@ def menu() -> None:
     print("     0. Exit")
     print(" ")
 
+def user_input(prompt: str) -> int:
+    """
+    Menu choices
+    """
+    menu_input = int(input(prompt))
+    if menu_input >= 2 or menu_input < 0:
+        raise ValueError
+    return menu_input
+
+
 def start() -> None:
     """
     Start game
@@ -62,8 +72,19 @@ def start() -> None:
     # Display menu
     menu()
 
-    user_input = input("> ")
-    if user_input == "1":
-        return True
-    elif user_input == "0":
-        return False
+    exit = False
+    while not exit:
+        try:
+            menu_choice = user_input(">>")
+        except ValueError as e:
+            print("You must enter a number between 0 and 1!")
+
+        if user_input == "1":
+            return True
+        elif user_input == "0":
+            exit = True
+            return False
+
+
+if __name__ == "__main__":
+    start()
