@@ -35,7 +35,15 @@ def test_game_instance(game_instance) -> None:
     assert game_instance.player1.name == "Madalin Popa"
     assert game_instance.player2.name == "Computer"
 
-    with pytest.raises(ValueError) as exception:
+    with pytest.raises(ValueError):
         game_instance.player1 = "A"
         game_instance.player2 = "B"
         assert "player must be an instance of Player"
+
+def test_start(game_instance) -> None:
+    """
+    Test start game
+    """
+    result = game_instance.start()
+    assert result
+

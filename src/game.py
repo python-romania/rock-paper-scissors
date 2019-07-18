@@ -55,3 +55,7 @@ class Game:
         """
         Calculate the winner
         """
+        self.player1.choice = 1
+        self.player2.chocie = 2
+        if self.player1.choice < self.player2.choice:
+            return True

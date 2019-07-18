@@ -37,11 +37,10 @@ class Player:
         return self._score
 
     @score.setter
-    def score(sefl, value) -> None:
+    def score(self, value) -> None:
         """
         Set player score
         """
         if type(value) != int:
             raise ValueError("You must enter a valid score")
         self._score = value
-
