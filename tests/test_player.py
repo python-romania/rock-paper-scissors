@@ -15,6 +15,7 @@ def player_fixture() -> Player:
     Player setup
     """
     player = Player("Madalin Popa")
+    player.choice = "Rock"
     return player
 
 def test_player_instance(player_fixture) -> None:
@@ -36,4 +37,12 @@ def test_player_instance(player_fixture) -> None:
     with pytest.raises(ValueError) as exception:
         player_fixture.name = 0
         assert exception.value == "You must enter a valid name"
+
+    # Test player choice
+    assert player_fixture.choice == "Rock"
+
+    # Test choice exception
+    with pytest.raises(ValueError) as exception:
+        player_fixture.choice = 0
+        assert exception.value == "You must enter a valid choice"
 

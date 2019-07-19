@@ -6,12 +6,13 @@ Contains Player class and all the actions related.
 
 class Player:
     """
-    Player class. 
-    It is used to identify a player. 
+    Player class.
+    It is used to identify a player.
     """
     def __init__(self, name: str) -> None:
         self._name = name
-        self._score = 0
+        self._choice: str = ""
+        self._score: int = 0
 
     @property
     def name(self) -> str:
@@ -44,3 +45,19 @@ class Player:
         if type(value) != int:
             raise ValueError("You must enter a valid score")
         self._score = value
+
+    @property
+    def choice(self) -> str:
+        """
+        Get player choice
+        """
+        return self._choice
+
+    @choice.setter
+    def choice(self, value) -> str:
+        """
+        Set player choice
+        """
+        if type(value) != str:
+            raise ValueError("You must enter a valid choice")
+        self._choice = value

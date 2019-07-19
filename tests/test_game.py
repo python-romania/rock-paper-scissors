@@ -40,10 +40,33 @@ def test_game_instance(game_instance) -> None:
         game_instance.player2 = "B"
         assert "player must be an instance of Player"
 
-def test_start(game_instance) -> None:
-    """
-    Test start game
-    """
-    result = game_instance.start()
-    assert result
+    # Test game items
+    assert type(Game.items) == list
+    assert len(Game.items) == 22
 
+    # Test game rounds
+    assert type(game_instance.rounds) == int
+    assert game_instance.rounds == 3
+
+    with pytest.raises(ValueError) as exception:
+        game_instance.rounds = "A"
+        assert exception.value == "You must enter a number!"
+
+def test_calculate(game_instance) -> None:
+    """
+    Test calculate
+    """
+    # Exception is throw is the value is not in the list
+    with pytest.raises(ValueError) as exception:
+        result = game_instance.calculate()
+        assert exception.value == "Please entes a valid item"
+    # TODO: implement test by checking the returned list
+
+@pytest.mark.skip
+def test_winner(game_instance) -> None:
+    """
+    Test winner
+    """
+    # Get next 7 items
+    result = game_instance.winner()
+    assert result == "Computer won the game!"

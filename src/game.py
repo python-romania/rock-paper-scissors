@@ -3,6 +3,9 @@ game.py
 
 Contains Game class and its methods.
 """
+# Standard imports
+from typing import List
+
 # Local imports
 from .player import Player
 
@@ -10,9 +13,15 @@ class Game:
     """
     Game class.
     """
-    def __init__(self, player1: Player, player2: Player) -> None:
+    # Items list
+    items: List[str] = ['Gun', 'Lighting', 'Devil', 'Dragon', 'Water', 'Air', 'Paper', 'Sponge',
+                        'Wolf', 'Tree', 'Human', 'Snake', 'Scissors', 'Fire', 'Rock', 'Gun',
+                        'Lighting', 'Devil', 'Dragon', 'Water', 'Air', 'Paper']
+
+    def __init__(self, player1: Player, player2: Player, rounds=3) -> None:
         self._player1 = player1
         self._player2 = player2
+        self._rounds = rounds
 
     @property
     def player1(self) -> Player:
@@ -46,16 +55,34 @@ class Game:
             raise ValueError("player must be an instance of Player")
         self._player2 = value
 
-    def start(self) -> None:
+    @property
+    def rounds(self) -> int:
         """
-        Start the game
+        Get game rounds
         """
+        return self._rounds
+
+    @rounds.setter
+    def rounds(self, value) -> None:
+        """
+        Set rounds
+        """
+        if type(value) != int:
+            raise ValueError("You must enter a number")
+        self._rounds = value
+
+    def calculate(self) -> List[str]:
+        """
+        Calculate the winner
+        """
+        if self.player1.choice not in Game.items:
+            raise ValueError("Please enter a valid item!")
+
+        player1_index = Game.items.index('casa')
+
+        return Game.items[player1_index: 7]
 
     def winner(self) -> str:
         """
         Calculate the winner
         """
-        self.player1.choice = 1
-        self.player2.chocie = 2
-        if self.player1.choice < self.player2.choice:
-            return True
