@@ -5,8 +5,8 @@ Test main file.
 """
 # Standard imports
 import sys
-from importlib import reload
 from unittest import mock
+from unittest.mock import MagicMock
 
 # Third party imports
 import pytest
@@ -55,11 +55,11 @@ def test_menu(capfd) -> None:
     assert forth_line in out
 
 @mock.patch("main.input")
-def test_input(fake_input, capfd) -> None:
+def test_input(fake_input: MagicMock, capfd) -> None:
     """
     Test user input
     """
-    # Test ValueError exception 
+    # Test ValueError exception
     fake_input.return_value = "A"
 
     with pytest.raises(ValueError) as exception:
@@ -72,7 +72,7 @@ def test_input(fake_input, capfd) -> None:
         result = main.user_input(">")
 
 @mock.patch("main.input")
-def test_start(fake_input) -> None:
+def test_start(fake_input: MagicMock) -> None:
     """
     Test main function
     """

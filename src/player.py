@@ -11,7 +11,7 @@ class Player:
     """
     def __init__(self, name: str) -> None:
         self._name = name
-        self._choice: str = ""
+        self._choice: str = None
         self._score: int = 0
 
     @property

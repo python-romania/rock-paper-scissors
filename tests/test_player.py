@@ -18,31 +18,39 @@ def player_fixture() -> Player:
     player.choice = "Rock"
     return player
 
-def test_player_instance(player_fixture) -> None:
+def test_player_instance(player_fixture: Player) -> None:
     """
     Test instance
     """
-    # Test score
+    assert player_fixture is not None
+
+def test_player_score(player_fixture: Player) -> None:
+    """
+    Test score attribute.
+    """
     assert player_fixture.score == 0
 
-    # Test score exception
     with pytest.raises(ValueError) as exception:
         player_fixture.score = "A"
-        assert exception.value == "You must enter a valid score"
+    assert str(exception.value) == "You must enter a valid score"
 
-    # Test player name
+def test_player_name(player_fixture: Player) -> None:
+    """
+    Test name attribute.
+    """
     assert player_fixture.name == "Madalin Popa"
 
-    # Test name exception
     with pytest.raises(ValueError) as exception:
         player_fixture.name = 0
-        assert exception.value == "You must enter a valid name"
+    assert str(exception.value) == "You must enter a valid name"
 
-    # Test player choice
+def test_player_choice(player_fixture: Player) -> None:
+    """
+    Test choice attribute
+    """
     assert player_fixture.choice == "Rock"
 
-    # Test choice exception
     with pytest.raises(ValueError) as exception:
         player_fixture.choice = 0
-        assert exception.value == "You must enter a valid choice"
+    assert str(exception.value) == "You must enter a valid choice"
 

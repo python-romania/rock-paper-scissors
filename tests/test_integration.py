@@ -16,11 +16,10 @@ def test_game():
     player2 = Player("Computer")
 
     # Add player choices
-    player1.choice = "Rock"
-    player2.choice = "Gun"
+    player1.choice = "Test"
+    player2.choice = "Test"
 
     game = Game(player1, player2)
-    game.start()
-    assert game.winner() == "Computer won!"
+    game.winner() == "Computer won!"
 
 

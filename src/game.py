@@ -68,14 +68,14 @@ class Game:
         Set rounds
         """
         if type(value) != int:
-            raise ValueError("You must enter a number")
+            raise ValueError("You must enter a number!")
         self._rounds = value
 
     def calculate(self) -> List[str]:
         """
         Calculate the winner
         """
-        if self.player1.choice not in Game.items:
+        if not self.player1.choice:
             raise ValueError("Please enter a valid item!")
 
         player1_index = Game.items.index('casa')
