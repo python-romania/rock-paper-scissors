@@ -16,10 +16,8 @@ def test_game():
     player2 = Player("Computer")
 
     # Add player choices
-    player1.choice = "Test"
-    player2.choice = "Test"
+    player1.choice = "Rock"
+    player2.choice = "Paper"
 
     game = Game(player1, player2)
     game.winner() == "Computer won!"
-
-

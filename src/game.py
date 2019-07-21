@@ -14,9 +14,12 @@ class Game:
     Game class.
     """
     # Items list
-    items: List[str] = ['Gun', 'Lighting', 'Devil', 'Dragon', 'Water', 'Air', 'Paper', 'Sponge',
-                        'Wolf', 'Tree', 'Human', 'Snake', 'Scissors', 'Fire', 'Rock', 'Gun',
-                        'Lighting', 'Devil', 'Dragon', 'Water', 'Air', 'Paper']
+    items: List[str] = ['Gun', 'Lighting', 'Devil', 'Dragon',
+                        'Water', 'Air', 'Paper', 'Sponge',
+                        'Wolf', 'Tree', 'Human', 'Snake',
+                        'Scissors', 'Fire', 'Rock', 'Gun',
+                        'Lighting', 'Devil', 'Dragon', 'Water',
+                        'Air', 'Paper', 'Sponge']
 
     def __init__(self, player1: Player, player2: Player, rounds=3) -> None:
         self._player1 = player1
@@ -67,22 +70,36 @@ class Game:
         """
         Set rounds
         """
-        if type(value) != int:
+        if type(value) == str and not value.isdigit():
             raise ValueError("You must enter a number!")
+        value = int(value)
+
+        if value < 0 or value > 100:
+            raise ValueError("You must enter a number between 1-100!")
+
         self._rounds = value
 
-    def calculate(self) -> List[str]:
+    def _calculate(self) -> List[str]:
         """
-        Calculate the winner
+        Get te list with items which can beat the user.
         """
-        if not self.player1.choice:
+        if not self.player1.choice or self.player1.choice not in Game.items:
             raise ValueError("Please enter a valid item!")
 
-        player1_index = Game.items.index('casa')
+        player1_index = Game.items.index(self.player1.choice)
 
-        return Game.items[player1_index: 7]
+        return Game.items[player1_index + 1: player1_index + 8]
 
     def winner(self) -> str:
         """
         Calculate the winner
         """
+        items = self._calculate()
+        if self.player2.choice == self.player1.choice:
+            return "Nobody won. It is a draw!"
+        elif self.player2.choice in items:
+            self.player2.score += 1
+            return f"{self.player2.name} won!"
+        else:
+            self.player1.score += 1
+            return f"{self.player1.name} won!"
