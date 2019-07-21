@@ -115,7 +115,7 @@ def start() -> None:
             # Menu choice
             menu_choice = user_input(">> ")
 
-            if menu_choice and menu_choice == 1:
+            if  menu_choice == 1:
                 # Display options
                 options()
 
@@ -157,8 +157,8 @@ def start() -> None:
                     continue
                 elif play_again == 0:
                     exit = True
-            elif menu_choice and menu_choice == 0:
-                    exit = True
+            elif menu_choice == 0:
+                exit = True
         except ValueError as e:
             print(e)
 
