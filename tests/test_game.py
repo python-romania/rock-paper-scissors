@@ -103,6 +103,7 @@ def test_winner(game_instance: game.Game) -> None:
         new_game = game.Game(human)
 
         new_game.player.choice = "Rock"
+        computer_choice = new_game.computer_choice
         result = new_game.winner()
         assert result == "Computer won!"
     reload(game)
@@ -117,6 +118,7 @@ def test_winner(game_instance: game.Game) -> None:
         new_game = game.Game(human)
 
         new_game.player.choice = "Human"
+        computer_choice = new_game.computer_choice
         result = new_game.winner()
         assert result == "Nobody won. It is a draw!"
     reload(game)
@@ -131,6 +133,7 @@ def test_winner(game_instance: game.Game) -> None:
         new_game = game.Game(human)
 
         new_game.player.choice = "Human"
+        computer_choice = new_game.computer_choice
         result = new_game.winner()
         assert result == "Madalin won!"
         # Final Score

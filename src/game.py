@@ -96,9 +96,9 @@ class Game:
         Calculate the winner
         """
         items = self._calculate()
-        if self.computer_choice == self.player.choice:
+        if self.player.choice == self._computer_choice:
             return "Nobody won. It is a draw!"
-        elif self.computer_choice in self._calculate():
+        elif self._computer_choice in self._calculate():
             self._computer_score += 1
             return f"Computer won!"
         else:

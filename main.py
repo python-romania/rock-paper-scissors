@@ -169,7 +169,8 @@ def start() -> None:
             for gr in range(game.rounds):
                 print(f">> Round {gr + 1} starts!")
                 game.player.choice = items_input(">> Enter your choice: ")
-                print(f">> Computer chose {game.computer_choice}")
+                computer_choice = game.computer_choice
+                print(f">> Computer chose {computer_choice}")
                 print(f">> {game.winner()}")
 
             # Final score
