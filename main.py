@@ -117,6 +117,8 @@ def rounds_input(prompt: str, game: Game) -> int:
             if len(rounds) > 0:
                 game.rounds = rounds
                 return True
+            else:
+                return False
         except ValueError as exception:
             print(str(exception))
             pass
