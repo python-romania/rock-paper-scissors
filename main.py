@@ -82,21 +82,56 @@ def options() -> None:
         print(f"{l1:<10}{l2:<10}{l3:<}")
     print(" ")
 
-def user_input(prompt: str) -> int:
+def menu_input(prompt: str) -> int:
     """
-    Menu choices
+    Get menu option.
     """
-    menu_input = input(prompt)
+    while True:
+        try:
+            option = Game.menu_input(prompt)
+            return option
+        except ValueError as exception:
+            print(str(exception))
+            pass
 
-    if type(menu_input) == str and not menu_input.isdigit():
-        raise ValueError("You must enter a number!")
+def user_name_input(prompt: str) -> str:
+    """
+    Get user name.
+    """
+    while True:
+        try:
+            player = Player("Human Player")
+            player.name = input(prompt)
+            return player
+        except ValueError as exception:
+            print(str(exception))
+            pass
 
-    menu_input = int(menu_input)
+def rounds_input(prompt: str, game: Game) -> int:
+    """
+    Get rounds input.
+    """
+    while True:
+        try:
+            rounds = input(prompt)
+            if len(rounds) > 0:
+                game.rounds = rounds
+                return True
+        except ValueError as exception:
+            print(str(exception))
+            pass
 
-    if menu_input >= 2 or menu_input < 0:
-        raise ValueError("You must enter a number between 0 and 1!")
-    return menu_input
-
+def items_input(prompt: str) -> str:
+    """
+    Get item input.
+    """
+    while True:
+        try:
+            option = Player.pick_element(prompt, Game.items)
+            return option
+        except ValueError as exception:
+            print(str(exception))
+            pass
 
 def start() -> None:
     """
@@ -109,58 +144,51 @@ def start() -> None:
     menu()
 
     exit = False
+
+    # Menu choice
+    menu_choice = menu_input(">> ")
+
     while not exit:
-        try:
 
-            # Menu choice
-            menu_choice = user_input(">> ")
+        if  menu_choice == 1:
+            # Display options
+            options()
 
-            if  menu_choice == 1:
-                # Display options
-                options()
+            # Create player
+            player = user_name_input(">> Enter your name: ")
 
-                # Create players
-                player1 = Player(input(">> Enter your name: "))
-                player2 = Player("Computer")
+            # Start a new game
+            game = Game(player)
 
-                # How many rounds
-                rounds = input(">> How many rounds? default=3: ")
+            # How many rounds
+            rounds = rounds_input(">> How many rounds? default=3: ", game)
 
-                # Start a new game
-                game = Game(player1, player2)
+            # Start rounds
+            for gr in range(game.rounds):
+                print(f">> Round {gr + 1} starts!")
+                game.player.choice = items_input(">> Enter your choice: ")
+                print(f">> Computer chose {game.computer_choice}")
+                print(f">> {game.winner()}")
 
-                if len(rounds) > 0:
-                    game.rounds = rounds
+            # Final score
+            print(">> Game Over!")
+            if game.player.score > game.computer_score:
+                print(f">> {game.player.name} won the game!")
+            elif game.player.score < game.computer_score:
+                print(">> Computer won the game!")
+            elif game.player.score == game.computer_score:
+                print(f">> Nobody won. We have a draw!")
 
-                # Start rounds
-                for gr in range(game.rounds):
-                    print(f">> Round {gr + 1} starts!")
-                    game.player1.choice = input(">> Enter your choice: ")
-                    game.player2.choice = random.choice(Game.items)
-                    print(f">> Computer chose {game.player2.choice}")
-                    print(f">> {game.winner()}")
+            # Play again?
+            play_again = menu_input(">> Do you want to play again? (1.Start, 0.Exit): ")
 
-                # Final score
-                print(">> Game Over!")
-                if game.player1.score > game.player2.score:
-                    print(f">> {game.player1.name} won the game!")
-                elif game.player1.score < game.player2.score:
-                    print(f">> {game.player2.name} won the game!")
-                elif game.player1.score == game.player2.score:
-                    print(f">> Nobody won. We have a draw!")
-
-                # Play again?
-                play_again = user_input(">> Do you want to play again? (1.Start, 0.Exit): ")
-
-                if play_again == 1:
-                    menu_choice = 1
-                    continue
-                elif play_again == 0:
-                    exit = True
-            elif menu_choice == 0:
+            if play_again == 1:
+                menu_choice = 1
+                continue
+            elif play_again == 0:
                 exit = True
-        except ValueError as e:
-            print(e)
+        elif menu_choice == 0:
+            exit = True
 
 if __name__ == "__main__":
     start()

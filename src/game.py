@@ -5,6 +5,7 @@ Contains Game class and its methods.
 """
 # Standard imports
 from typing import List
+import random
 
 # Local imports
 from .player import Player
@@ -21,42 +22,42 @@ class Game:
                         'Lighting', 'Devil', 'Dragon', 'Water',
                         'Air', 'Paper', 'Sponge']
 
-    def __init__(self, player1: Player, player2: Player, rounds=3) -> None:
-        self._player1 = player1
-        self._player2 = player2
+    def __init__(self, player: Player, rounds=3) -> None:
+        self._player = player
         self._rounds = rounds
+        self._computer_choice = ""
+        self._computer_score = 0
 
     @property
-    def player1(self) -> Player:
+    def player(self) -> Player:
         """
-        Get player1
+        Get player
         """
-        return self._player1
+        return self._player
 
-    @player1.setter
-    def player1(self, value) -> None:
+    @player.setter
+    def player(self, value) -> None:
         """
-        Set player1
+        Set player
         """
         if not isinstance(value, Player):
             raise ValueError("player must be an instance of Player")
-        self._player1 = value
+        self._player = value
 
     @property
-    def player2(self) -> Player:
+    def computer_choice(self) -> str:
         """
-        Get player2
+        Returns computer choice.
         """
-        return self._player2
+        self._computer_choice = random.choice(Game.items)
+        return self._computer_choice
 
-    @player2.setter
-    def player2(self, value) -> None:
+    @property
+    def computer_score(self) -> int:
         """
-        Set player2
+        Returns compyter score.
         """
-        if not isinstance(value, Player):
-            raise ValueError("player must be an instance of Player")
-        self._player2 = value
+        return self._computer_score
 
     @property
     def rounds(self) -> int:
@@ -83,23 +84,40 @@ class Game:
         """
         Get te list with items which can beat the user.
         """
-        if not self.player1.choice or self.player1.choice not in Game.items:
+        if not self.player.choice or self.player.choice not in Game.items:
             raise ValueError("Please enter a valid item!")
 
-        player1_index = Game.items.index(self.player1.choice)
+        player_index = Game.items.index(self.player.choice)
 
-        return Game.items[player1_index + 1: player1_index + 8]
+        return Game.items[player_index + 1: player_index + 8]
 
     def winner(self) -> str:
         """
         Calculate the winner
         """
         items = self._calculate()
-        if self.player2.choice == self.player1.choice:
+        if self.computer_choice == self.player.choice:
             return "Nobody won. It is a draw!"
-        elif self.player2.choice in items:
-            self.player2.score += 1
-            return f"{self.player2.name} won!"
+        elif self.computer_choice in self._calculate():
+            self._computer_score += 1
+            return f"Computer won!"
         else:
-            self.player1.score += 1
-            return f"{self.player1.name} won!"
+            self.player.score += 1
+            return f"{self.player.name} won!"
+
+    @staticmethod
+    def menu_input(prompt: str) -> int:
+        """
+        Returns menu option input.
+        """
+        option = input(prompt)
+        if type(option) == str and not option.isdigit():
+            raise ValueError("Please enter a number!")
+
+        option_int = int(option)
+
+        if option_int < 0 or option_int > 2:
+            raise ValueError("Please enter a number between 0 and 1!")
+        return option_int
+
+

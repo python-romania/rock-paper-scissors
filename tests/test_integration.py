@@ -12,12 +12,11 @@ def test_game():
     Test the entire game
     """
     # Create player instances
-    player1 = Player("Madalin Popa")
-    player2 = Player("Computer")
+    player = Player("Madalin Popa")
 
     # Add player choices
-    player1.choice = "Rock"
-    player2.choice = "Paper"
+    player.choice = "Rock"
 
-    game = Game(player1, player2)
+    game = Game(player)
     game.winner() == "Computer won!"
+    print(f"Computer choice is: {game.computer_choice}")

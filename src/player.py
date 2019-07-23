@@ -3,6 +3,8 @@ player.py
 
 Contains Player class and all the actions related.
 """
+# Standard imports
+from typing import List
 
 class Player:
     """
@@ -28,6 +30,10 @@ class Player:
         """
         if type(value) != str:
             raise ValueError("You must enter a valid name")
+
+        if value.isdigit():
+            raise ValueError("Please enter a valid name!")
+
         self._name = value
 
     @property
@@ -61,3 +67,15 @@ class Player:
         if type(value) != str:
             raise ValueError("You must enter a valid choice")
         self._choice = value
+
+    @staticmethod
+    def pick_element(prompt: str, elements: List[str]) -> str:
+        """
+        Player pick elements from list.
+        """
+        pick = input(prompt).title()
+        if pick not in elements:
+            raise ValueError("Please chose a valid item!")
+        return pick
+
+
