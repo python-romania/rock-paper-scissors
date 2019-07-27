@@ -1,4 +1,5 @@
-[![Build Status](https://travis-ci.com/python-romania/rock-paper-scissors.svg?branch=master)](https://travis-ci.com/python-romania/rock-paper-scissors)
+[![Build Status](https://travis-ci.com/python-romania/rock-paper-scissors.svg?branch=master)](https://travis-ci.com/python-romania/rock-paper-scissors)![GitHub](https://img.shields.io/github/license/python-romania/rock-paper-scissors)
+
 
 # Text Game
 Simple Rock Paper Scissors text game.
