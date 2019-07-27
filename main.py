@@ -39,9 +39,6 @@ Dragon       Wolf      Fire
 >> Do you want to play again? (1.Start, 0.Exit):
 
 """
-# Standard imports
-import random
-
 # Local imports
 from src.game import Game
 from src.player import Player
@@ -70,16 +67,16 @@ def options() -> None:
     Print the options
     """
     items = ["Rock", "Gun", "Lighting", "Devil", "Dragon",
-            "Water", "Air", "Paper", "Sponge", "Wolf",
-            "Tree", "Human", "Snake", "Scissors", "Fire"]
+             "Water", "Air", "Paper", "Sponge", "Wolf",
+             "Tree", "Human", "Snake", "Scissors", "Fire"]
 
     line1 = items[0::3]
     line2 = items[1::3]
     line3 = items[2::3]
 
     print(" ")
-    for l1, l2, l3 in zip(line1, line2, line3):
-        print(f"{l1:<10}{l2:<10}{l3:<}")
+    for lin1, lin2, lin3 in zip(line1, line2, line3):
+        print(f"{lin1:<10}{lin2:<10}{lin3:<}")
     print(" ")
 
 def menu_input(prompt: str) -> int:
@@ -92,7 +89,6 @@ def menu_input(prompt: str) -> int:
             return option
         except ValueError as exception:
             print(str(exception))
-            pass
 
 def user_name_input(prompt: str) -> str:
     """
@@ -105,7 +101,6 @@ def user_name_input(prompt: str) -> str:
             return player
         except ValueError as exception:
             print(str(exception))
-            pass
 
 def rounds_input(prompt: str, game: Game) -> int:
     """
@@ -116,12 +111,11 @@ def rounds_input(prompt: str, game: Game) -> int:
             rounds = input(prompt)
             if len(rounds) > 0:
                 game.rounds = rounds
-                return True
+                return game.rounds
             else:
-                return False
+                return game.rounds
         except ValueError as exception:
             print(str(exception))
-            pass
 
 def items_input(prompt: str) -> str:
     """
@@ -133,7 +127,6 @@ def items_input(prompt: str) -> str:
             return option
         except ValueError as exception:
             print(str(exception))
-            pass
 
 def start() -> None:
     """
@@ -145,12 +138,12 @@ def start() -> None:
     # Display menu
     menu()
 
-    exit = False
+    exit_game = False
 
     # Menu choice
     menu_choice = menu_input(">> ")
 
-    while not exit:
+    while not exit_game:
 
         if  menu_choice == 1:
             # Display options
@@ -166,8 +159,8 @@ def start() -> None:
             rounds = rounds_input(">> How many rounds? default=3: ", game)
 
             # Start rounds
-            for gr in range(game.rounds):
-                print(f">> Round {gr + 1} starts!")
+            for game_rounds in range(rounds):
+                print(f">> Round {game_rounds + 1} starts!")
                 game.player.choice = items_input(">> Enter your choice: ")
                 computer_choice = game.computer_choice
                 print(f">> Computer chose {computer_choice}")
@@ -177,8 +170,10 @@ def start() -> None:
             print(">> Game Over!")
             if game.player.score > game.computer_score:
                 print(f">> {game.player.name} won the game!")
+                print(f">> Final score: {game.player.score}:{game.computer_score}")
             elif game.player.score < game.computer_score:
                 print(">> Computer won the game!")
+                print(f">> Final score: {game.computer_score}:{game.player.score}")
             elif game.player.score == game.computer_score:
                 print(f">> Nobody won. We have a draw!")
 
@@ -189,9 +184,9 @@ def start() -> None:
                 menu_choice = 1
                 continue
             elif play_again == 0:
-                exit = True
+                exit_game = True
         elif menu_choice == 0:
-            exit = True
+            exit_game = True
 
 if __name__ == "__main__":
     start()
